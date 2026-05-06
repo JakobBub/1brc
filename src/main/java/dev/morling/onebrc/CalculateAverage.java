@@ -53,9 +53,13 @@ public class CalculateAverage {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        long startTime = System.currentTimeMillis();
+
         RandomAccessFile file = new RandomAccessFile(FILE, "r");
         FileChannel channel = file.getChannel();
         long fileSize = channel.size();
+
+        System.out.println("Processing file size: " + String.format("%.2f", fileSize / (1024.0 * 1024.0 * 1024.0)) + " GB");
 
         int numThreads = Runtime.getRuntime().availableProcessors();
         long chunkSize = fileSize / numThreads;
@@ -110,6 +114,9 @@ public class CalculateAverage {
         System.out.println(sb.toString());
         channel.close();
         file.close();
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Processing took: " + (endTime - startTime) + " ms");
     }
     
     private static double round(double value) {
