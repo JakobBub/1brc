@@ -1,0 +1,24 @@
+# Globale Projekt-Richtlinien (1 Billion Row Challenge)
+
+## 1. Tech-Stack & Architektur
+- **Sprache:** Java 21+ (Fokus auf rohe Performance)
+- **Frameworks:** KEINE (Kein Spring, kein Quarkus). Nur Standardbibliothek.
+- **I/O:** Memory-Mapped Files (`FileChannel`, `MemorySegment`), rohe Byte-Arrays statt `String` Objekte.
+- **Architektur:** Monolithisches, extrem optimiertes Skript. Keine Schichten-Architektur (Controller/Service/Repository) nötig.
+
+## 2. Skill-Referenzen (WICHTIG FÜR AGENTEN)
+Wenn du spezifische Implementierungen vornimmst, fokussiere dich auf:
+- Vermeidung von Garbage Collection (Object Allocation auf ein Minimum reduzieren).
+- Effizientes Parsen von Bytes (Custom Hash-Maps statt `java.util.HashMap`).
+- Nebenläufigkeit (Parallelisierung der Datenverarbeitung in Chunks).
+
+## 3. Projekt-Struktur & Pfade
+- Haupt-Klasse: `src/main/java/dev/morling/onebrc/CalculateAverage.java`
+- Test-Daten: Ein Bash/Python Skript generiert die `measurements.txt` (Achtung: wird 13-14 GB groß!).
+- Kompilierung: `javac -d target src/main/java/dev/morling/onebrc/CalculateAverage.java`
+- Ausführung: `java -cp target dev.morling.onebrc.CalculateAverage`
+
+## 4. Workflow & Automatisierungs-Regeln
+- **Shared Memory:** Der Plan liegt in `ARCHITECTURE_PLAN.md`. Die Sektion `## 1. Original User Prompt` steht ganz oben.
+- **Performance-Fokus:** Jeder Iterations-Loop zielt darauf ab, die Ausführungszeit der Datei zu verringern.
+- **Automatisierter Handshake:** `switch_mode` Tool wird genutzt (Planer -> Dev -> QA).
